@@ -1,0 +1,15 @@
+<h1>Juridisk Ordbog v.2</h1>
+
+<% form_tag words_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+  <%= render @words %>
+
+
+<%= will_paginate @words %>
+
+<%= link_to 'New Word', new_word_path if user_signed_in? && current_user.admin? %>

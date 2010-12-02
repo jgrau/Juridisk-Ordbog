@@ -1,0 +1,8 @@
+<h1><%= @word.name %></h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= simple_format(@word.description) %>
+</p>
+<%= link_to 'Back', words_path %>
+<%= link_to 'Edit', [:edit, @word] if user_signed_in? && current_user.admin? %>
