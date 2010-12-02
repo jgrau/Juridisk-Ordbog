@@ -2,7 +2,7 @@ class WordsController < ApplicationController
   # GET /words
   # GET /words.xml
   def index
-    @words = Word.search(params[:search]).paginate(:page => params[:page])
+    @words = Word.search(params[:search]).starts_with(params[:letter]).paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -2,11 +2,12 @@ class Word < ActiveRecord::Base
   
   default_scope order('name ASC')
   
-  def self.search(search)
-    if search
-      find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
-    else
-      find(:all)
-    end
-  end
+  scope :search, lambda { |query|
+    query.blank? ? {} : where('name LIKE ?', "%#{query}%")
+  }
+  
+  scope :starts_with, lambda { |letter|
+    letter.blank? ? {} : where('name LIKE ?', "#{letter}%")
+  }
+  
 end

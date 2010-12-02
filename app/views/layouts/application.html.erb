@@ -7,22 +7,24 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-   <div style="float:right">
-      <% ("A".."Z").map(&:to_s).each do |w| %>
-         <%= link_to("#{w}: #{Word.where("name LIKE '#{w}%'").count}", words_path(:letter => w)) %>
-      <% end  %>
-   </div>
-<ul>
-   <% if user_signed_in? %>
-      <li><%= link_to "Sign out", destroy_user_session_path %></li>
-      <% if current_user.admin? %>
-         <li><%= link_to "Add word", new_word_path %></li>
+   
+   <ul>
+      <% if user_signed_in? %>
+         <li><%= link_to "Sign out", destroy_user_session_path %></li>
+         <% if current_user.admin? %>
+            <li><%= link_to "Add word", new_word_path %></li>
+         <% end %>
+      <% else %>
+         <li><%= link_to "Sign in", new_user_session_path %></li>
       <% end %>
-   <% else %>
-      <li><%= link_to "Sign in", new_user_session_path %></li>
-      
-   <% end %>
-<%= yield %>
+   </ul>
+
+   <ul style="float:right">
+      <% ("A".."Z").map(&:to_s).each do |w| %>
+         <li><%= link_to("#{w}: #{Word.starts_with(w).count}", words_path(:letter => w)) %></li>
+      <% end  %>
+   </ul>
+   <%= yield %>
 
 
 </body>
